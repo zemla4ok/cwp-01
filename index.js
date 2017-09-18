@@ -1,4 +1,5 @@
 var fs = require('fs');
+var path = require('path');
 
 const DIR_PATH = process.argv[2];
 
@@ -30,6 +31,7 @@ let copyright;
                 console.log("Path error");
             }
             else {
+                let dirPath = createDirForTXT();
                 createSummaryScript();
                 setCopyright();
             }
@@ -55,7 +57,18 @@ function setCopyright() {
         }
         else {
             copyright = JSON.parse(data);
-            console.log(copyright);
         }
     })
+}
+
+function createDirForTXT() {
+    let dir = `${DIR_PATH}\\${path.basename(DIR_PATH)}`;
+    fs.mkdir(dir,(err) => {
+        if(err){
+            console.log(err);
+            console.log("error in creatind directory for *.txt files");
+            throw  err;
+        }
+    });
+    return dir;
 }
