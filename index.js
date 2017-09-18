@@ -9,9 +9,17 @@ const DIR_PATH = process.argv[2];
                 console.log("Path error");
             }
             else {
-                fs.appendFile(`${DIR_PATH}\\summary.js`, 'my file');
+
             }
         }
     )
 });
 
+function createSummaryScript() {
+    fs.appendFile(`${DIR_PATH}\\summary.js`, '', (err) =>{
+        if(err){
+            console.log(err);
+            console.log('Error in appending file');
+        }
+    });
+}
