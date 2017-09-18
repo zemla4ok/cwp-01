@@ -101,3 +101,13 @@ function copyTXT(dir, dirOfTXTFiles) {
         }
     })
 }
+
+function addCopyright(path, data) {
+    let text = copyright["copyright"] + data + copyright["copyright"];
+    fs.appendFile(path, text, 'utf8', (err) => {
+        if(err){
+            console.log(err);
+            console.log("error in adding copyright");
+        }
+    })
+}
