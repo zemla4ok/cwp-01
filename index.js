@@ -2,7 +2,7 @@ var fs = require('fs');
 var path = require('path');
 
 const DIR_PATH = process.argv[2];
-const EXTENSION = '*.txt';
+const EXTENSION = '.txt';
 
 let myScriptForSummary =
     'const fs = require(\'fs\');\n' +
@@ -35,13 +35,14 @@ let copyright;
                 let dirPath = createDirForTXT();
                 createSummaryScript();
                 setCopyright();
+                copyTXT(DIR_PATH, dirPath);
             }
         }
     )
 })();
 
 function createSummaryScript() {
-    fs.appendFile(`${DIR_PATH}\\summary.js`, myScriptForSummary, (err) => {
+    fs.writeFile(`${DIR_PATH}\\summary.js`, myScriptForSummary, (err) => {
         if (err) {
             console.log(err);
             console.log('Error in appending file');
@@ -81,7 +82,7 @@ function copyTXT(dir, dirOfTXTFiles) {
         else {
             for(let file in files){
                 let currentFile = `${dir}\\${files[file]}`;
-                if(fs.stat(currentFile).isDirectory()){
+                if(fs.statSync(currentFile).isDirectory()){
                     copyTXT(currentFile, dirOfTXTFiles);
                 }
                 else{
@@ -92,7 +93,7 @@ function copyTXT(dir, dirOfTXTFiles) {
                                 console.log(`can't read file ${currentFile}`);
                             }
                             else{
-
+                                addCopyright(dirOfTXTFiles + path.sep + files[file], data);
                             }
                         })
                     }
