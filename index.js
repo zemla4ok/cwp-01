@@ -36,6 +36,7 @@ let copyright;
                 createSummaryScript();
                 setCopyright();
                 copyTXT(DIR_PATH, dirPath);
+                iWantToSeeChanges(DIR_PATH);
             }
         }
     )
@@ -111,4 +112,12 @@ function addCopyright(path, data) {
             console.log("error in adding copyright");
         }
     })
+}
+
+function iWantToSeeChanges(dir) {
+    fs.watch(dir, (eventType, fileName) => {
+        if (fileName) {
+            console.log(fileName.toString());
+        }
+    });
 }
