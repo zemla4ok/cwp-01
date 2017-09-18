@@ -21,6 +21,7 @@ let myScriptForSummary =
     '        }\n' +
     '    });\n' +
     '})(__dirname, null);';
+let copyright;
 
 (() => {
     fs.access(DIR_PATH, (err) => {
@@ -29,8 +30,8 @@ let myScriptForSummary =
                 console.log("Path error");
             }
             else {
-                console.log("great");
                 createSummaryScript();
+                setCopyright();
             }
         }
     )
@@ -43,4 +44,18 @@ function createSummaryScript() {
             console.log('Error in appending file');
         }
     });
+}
+
+function setCopyright() {
+    fs.readFile("config.json", (err, data) => {
+        if (err) {
+            console.log(err);
+            console.log("error in config.json")
+            copyright = 'null';
+        }
+        else {
+            copyright = JSON.parse(data);
+            console.log(copyright);
+        }
+    })
 }
